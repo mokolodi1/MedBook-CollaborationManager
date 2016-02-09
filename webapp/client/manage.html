@@ -1,0 +1,43 @@
+<template name="manage">
+  <h1>Manage</h1>
+
+  <div class="row">
+    <div class="col-sm-4">
+      {{> selectableCollaborations}}
+    </div>
+    <div class="col-sm-8">
+      {{> collaborationDetail selectedCollaboration}}
+    </div>
+  </div>
+</template>
+
+<template name="selectableCollaborations">
+  {{#if Template.subscriptionsReady}}
+    <div class="list-group">
+      {{! TODO: put one in there}}
+      {{#each getCollaborations}}
+        {{> showCollaboration}}
+      {{/each}}
+    </div>
+  {{else}}
+    <div class="alert alert-info" role="alert">
+      <strong>Loading...</strong>
+      The data will arrive soon!
+    </div>
+  {{/if}}
+</template>
+
+<template name="showCollaboration">
+  <a href="" class="select-collaboration list-group-item {{activeIfSelected}}">
+    <h4 class="list-group-item-heading">{{name}}</h4>
+    <p class="list-group-item-text">
+      Stuff stuff stuff
+    </p>
+  </a>
+</template>
+
+<template name="collaborationDetail">
+  <div class="well">
+    Soon.
+  </div>
+</template>

@@ -1,0 +1,117 @@
+<template name="appBody">
+  {{! other option: navbar-static-top}}
+  <nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container-fluid">
+      <!-- Brand and toggle get grouped for better mobile display -->
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed"
+            data-toggle="collapse" data-target="#workbench-navbar-collapse"
+            aria-expanded="false">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="{{pathFor "manage"}}">MedBook</a>
+      </div>
+
+      <!-- Collect the nav links, forms, and other content for toggling -->
+      <div class="collapse navbar-collapse" id="workbench-navbar-collapse">
+        <ul class="nav navbar-nav">
+          <li class="{{isActiveRoute "manage"}}">
+            <a href="{{pathFor "manage"}}">
+              Manage
+            </a>
+          </li>
+          <!-- <li class="{{isActiveRoute "limma"}}">
+            <a href="{{pathFor "limma"}}">
+              Limma
+            </a>
+          </li> -->
+          <!-- <li><a href="#">Link</a></li>
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
+            <ul class="dropdown-menu">
+              <li><a href="#">Action</a></li>
+              <li><a href="#">Another action</a></li>
+              <li><a href="#">Something else here</a></li>
+              <li role="separator" class="divider"></li>
+              <li><a href="#">Separated link</a></li>
+              <li role="separator" class="divider"></li>
+              <li><a href="#">One more separated link</a></li>
+            </ul>
+          </li> -->
+        </ul>
+
+        <ul class="nav navbar-nav navbar-right">
+          <li>
+            {{> loginButtons}}
+          </li>
+
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+              Apps
+              <span class="caret"></span>
+            </a>
+            <ul class="dropdown-menu">
+              <li><a href="">Soon this will link to other MedBook apps</a></li>
+              <!-- <li><a href="#">Another action</a></li>
+              <li><a href="#">Something else here</a></li>
+              <li role="separator" class="divider"></li>
+              <li><a href="#">Separated link</a></li> -->
+            </ul>
+          </li>
+        </ul>
+      </div><!-- /.navbar-collapse -->
+    </div>
+  </nav>
+
+  <div class="container-fluid" style="margin-top: 50px;">
+    {{! this div is shown when the viewport is too small and bootstrap
+        thinks it's a phone/tablet}}
+    <div id="viewport-too-small">
+      <div class="jumbotron">
+        <h1>Are you on a phone?</h1>
+        <p>
+          If you're on a laptop or desktop, please make your window wider.
+          Currently CollaborationManager has been designed to work on large screens
+          (wider than 768px).
+        </p>
+        <p>
+          If you want to use CollaborationManager on smaller devices, please email a
+          feature request to the MedBook team.
+        </p>
+        <p>
+          <a href="mailto:mokolodi1@gmail.com?Subject=CollaborationManager%20feature%20request:%20mobile%20layout"
+              type="button" class="btn btn-primary">
+            Email Teo
+          </a>
+        </p>
+      </div>
+    </div>
+
+    <div id="viewport-big-enough">
+      {{#if currentUser}}
+        <div id="logged-in">
+          {{>Template.dynamic template=content}}
+        </div>
+      {{else}}
+        {{#if loggingIn}}
+          <div class="jumbotron down-from-navbar">
+            <h1>Logging in...</h1>
+            <p>
+              The collaboration manager will be ready soon!
+            </p>
+          </div>
+        {{else}}
+          <div class="jumbotron down-from-navbar">
+            <h1>You're not logged in!</h1>
+            <p>
+              Please log in to continue.
+            </p>
+          </div>
+        {{/if}}
+      {{/if}}
+    </div>
+  </div>
+</template>
