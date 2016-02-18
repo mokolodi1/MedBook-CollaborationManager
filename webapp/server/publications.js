@@ -1,30 +1,7 @@
 Meteor.publish("collaborations", function () {
-  if (!this.userId) {
-    this.ready();
-    return;
-  }
+  var user = MedBook.ensureUser(this.userId);
 
-  var collaborations = [];
-  collaborations = Meteor.users.findOne({_id: this.userId}).getAssociatedCollaborations();
-
-  // if (!collaborations || collaborations.length === 0) {
-  //   return Collaborations.find( {isUnlisted: false} );
-  // } else {
-  //   return Collaborations.find({
-  //     $or: [
-  //       {isUnlisted: false}, // allows people to join
-  //       {
-  //         $and: [
-	//           {isUnlisted: true}, // here to show the true branch
-	//           {
-  //             $or: [
-	// 	            {collaborators:  {$in: collaborations}},
-	// 	            {administrators: {$in: collaborations}},
-	//             ]
-  //           }
-  //         ]
-  //       }
-  //     ]
-  //   });
-  // }
+  // publish both collaborations they're a member of and ones they admin
+  var collaborations = user.getCollaborations();
+  return Collaborations.find(myCollabsQuery(collaborations));
 });

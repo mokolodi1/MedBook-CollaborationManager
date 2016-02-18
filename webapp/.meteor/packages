@@ -26,9 +26,9 @@ ejson
 spacebars
 check
 arillo:flow-router-helpers
-huttonr:bootstrap3
 aldeed:autoform
 mokolodi1:helpers
 reactive-var
 aldeed:template-extension
 medbook:collaborations
+twbs:bootstrap

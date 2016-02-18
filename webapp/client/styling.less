@@ -15,7 +15,10 @@ ul.no-bullet-points {
 
 .affix {
   top: 60px;
-  width: 100%;
+  /* these are to make it seem like a col-*-8 */
+  width: 66.66666667%;
+  /* 30px b/c we're already inside a col- class but the .affix doesn't know */
+  padding-right: 30px;
 }
 
 @media screen and (min-width: 768px) {
@@ -32,4 +35,10 @@ ul.no-bullet-points {
 
 .down-from-navbar {
   margin-top: 15px;
+}
+
+// app-specific
+.show-collab {
+  font-size: 85%;
+  margin-right: 5px;
 }

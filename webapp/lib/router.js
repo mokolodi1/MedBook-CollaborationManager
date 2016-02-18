@@ -15,10 +15,10 @@ collaborationManager.route("/", {
   }
 });
 
-collaborationManager.route("/manage", {
-  name: "manage",
+collaborationManager.route("/collaborations", {
+  name: "collaborations",
   action: function() {
-    BlazeLayout.render("appBody", {content: "manage"});
+    BlazeLayout.render("appBody", {content: "collaborations"});
   }
 });
 
