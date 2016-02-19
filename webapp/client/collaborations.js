@@ -34,30 +34,7 @@ Template.collabBrowser.onCreated(function () {
     }
   });
 
-  // load up the collaborations and select the first one, stopping
-  // when the collabsSub is finished
-  var user = MedBook.findUser(Meteor.userId());
-  var query = myCollabsQuery(user.getCollaborations());
-  var observeHandle = Collaborations.find(query, { sort: { name: 1 } })
-      .observe({
-    addedAt: function (doc, index) {
-      if (index === 0) {
-        instance.selectedCollabId.set(doc._id);
-      }
-    },
-    movedTo: function (doc, fromIndex, toIndex, before) {
-      // When new documents come in, they're added to the end and then
-      // moved to the beginning.
-      if (toIndex === 0) {
-        instance.selectedCollabId.set(doc._id);
-      }
-    },
-  });
-
-  instance.subscribe("collaborations", function () {
-    // stop the observe when the data has loaded
-    observeHandle.stop();
-  });
+  instance.subscribe("collaborations");
 });
 
 Template.collabBrowser.helpers({
@@ -153,6 +130,14 @@ Template.manageCollab.onCreated(function () {
 
   instance.removeClicked = new ReactiveVar(false);
   instance.editing = new ReactiveVar(false);
+
+  // set back to defaults when the selectedCollabId changes
+  instance.autorun(function () {
+    instance.parent().selectedCollabId.get();
+
+    instance.removeClicked.set(false);
+    instance.editing.set(false); // hard cancel: lose changes
+  });
 });
 
 Template.manageCollab.onRendered(function () {
@@ -177,6 +162,9 @@ Template.manageCollab.helpers({
       "adminApprovalRequired"
     ]);
   },
+  booleanString: function (boolean) {
+    return boolean.toString();
+  },
 });
 
 Template.manageCollab.events({
@@ -184,8 +172,7 @@ Template.manageCollab.events({
     instance.editing.set(true);
   },
   "click .done-editing-collab": function (event, instance) {
-
-    var valid = AutoForm.validateForm("summary-edit-form");
+    var valid = AutoForm.validateForm("summary-edit-collab-form");
     if (valid) {
       var values = AutoForm.getFormValues("summary-edit-form");
       Meteor.call("updateCollab", this.name, values.insertDoc,

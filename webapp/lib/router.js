@@ -22,6 +22,13 @@ collaborationManager.route("/collaborations", {
   }
 });
 
+collaborationManager.route("/studies", {
+  name: "studies",
+  action: function() {
+    BlazeLayout.render("appBody", {content: "studies"});
+  }
+});
+
 // var testing = collaborationManager.group({
 //   prefix: "/testing"
 // });

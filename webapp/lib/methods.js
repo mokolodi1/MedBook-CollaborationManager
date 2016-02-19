@@ -45,4 +45,37 @@ Meteor.methods({
       $set: setObject,
     });
   },
+
+
+  // study methods
+  createStudy: function (newStudy) {
+    check(newStudy, newStudySchema);
+
+    var user = MedBook.ensureUser(this.userId);
+    // make them the default collaborator
+    newStudy.collaborations = [user.collaborations.personal];
+
+    if (Meteor.call("studyLabelTaken", newStudy.study_label)) {
+      throw new Meteor.Error("study-label-taken");
+    }
+
+    return Studies.insert(newStudy);
+  },
+  studyLabelTaken: function (study_label) {
+    return !!Studies.findOne({study_label: study_label});
+  },
+  updateStudy: function (study_label, description) {
+    check([study_label, description], [String]);
+
+    var user = MedBook.ensureUser(this.userId);
+    var query = { study_label: study_label };
+    var study = Studies.findOne(query);
+    user.ensureAccess(study);
+
+    Studies.update(query, {
+      $set: {
+        description: description
+      }
+    });
+  },
 });

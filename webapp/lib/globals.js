@@ -49,3 +49,12 @@ myCollabsQuery = function (memberOf) {
     ]
   };
 };
+
+
+
+newStudySchema = Studies.simpleSchema().pick([
+  "study_label",
+  "name",
+  "short_name",
+  "description",
+]);
