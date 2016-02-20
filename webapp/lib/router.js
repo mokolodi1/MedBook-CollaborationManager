@@ -4,32 +4,28 @@ FlowRouter.notFound = {
   }
 };
 
-var collaborationManager = FlowRouter.group({
-  prefix: "/CollaborationManager"
-});
-
-collaborationManager.route("/", {
+FlowRouter.route("/", {
   name: "welcome",
   action: function() {
     BlazeLayout.render("appBody", {content: "welcome"});
   }
 });
 
-collaborationManager.route("/collaborations", {
+FlowRouter.route("/collaborations", {
   name: "collaborations",
   action: function() {
     BlazeLayout.render("appBody", {content: "collaborations"});
   }
 });
 
-collaborationManager.route("/studies", {
+FlowRouter.route("/studies", {
   name: "studies",
   action: function() {
     BlazeLayout.render("appBody", {content: "studies"});
   }
 });
 
-// var testing = collaborationManager.group({
+// var testing = FlowRouter.group({
 //   prefix: "/testing"
 // });
 //
